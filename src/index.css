@@ -1,13 +1,74 @@
+:root {
+  --background: rgb(95, 158, 160);
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.weCard {
+  background-color: var(--background);
+  color: white;
+  box-shadow: 9px 9px 10px rgb(116, 108, 108),-9px -9px 10px rgb(104, 99, 99);
+  border: 1px solid black;
+  margin: 30px auto;
+  width: 40%;
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 15px;
+  position: relative;
+}
+
+.form {
+  margin: 40px auto;
+  width: 40%;
+}
+
+.btn {
+  border: none;
+  margin-left: 30px;
+  background-color: var(--background);
+  width: 20%;
+  height: 30px;
+  color: white;
+  border-radius: 10px;
+}
+
+.input {
+  width: 70%;
+  height: 30px;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.err {
+  background-color: rgb(155, 37, 37);
+  color: white;
+  box-shadow: 5px 5px 8px rgb(145, 91, 91);
+  margin: 30px auto;
+  width: 40%;
+  text-align: center;
+  font-size: 2rem;
+  padding: 10px;
+}
+
+.img {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 2px;
+  top: 2px;
+  border: 1px black solid;
+  background-color: whitesmoke;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  text-align: center;
 }
