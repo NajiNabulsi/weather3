@@ -72,3 +72,19 @@ code {
   font-size: 1.5rem;
   text-align: center;
 }
+
+.delet-button{
+  width: 50;
+  height: 50;
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.delet-button:hover{
+  background-color: red;
+  color: white;
+}

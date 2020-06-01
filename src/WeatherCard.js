@@ -1,33 +1,56 @@
 import React, { useState, useEffect } from "react";
+import Form from "./Form";
+import CityInfo from "./CityInfo";
 
+// use states
 const WeatherCard = () => {
-  const [val, setVal] = useState([]);
-  const [qurey, setQurey] = useState("Nijmegen");
+  const [
+    data = [
+      {
+        id: null,
+        city: undefined,
+        country: undefined,
+        main: undefined,
+        temp_max: null,
+        temp_min: null,
+        loction: "",
+      },
+    ],
+    setData,
+  ] = useState([]);
+
+  const [qurey, setQurey] = useState("Amsterdam");
   const [search, setSearch] = useState();
-  const [error, setError] = useState(false);
+  const [isLoding, setIsLoding] = useState(false);
+  const [hasErr, setHasErr] = useState(false);
 
   // fetch weather function
   const getWeather = async () => {
+    setHasErr(false);
+    setIsLoding(true);
     try {
       const apiCall = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${qurey}&appid=${process.env.REACT_APP_API_KEY}&units=metric`
       );
 
       const response = await apiCall.json();
-
-      setVal([
-        ...val,
+      
+      setData([
+        ...data,
         {
           id: response.sys.id,
           city: `${response.name}, ${response.sys.country}`,
           main: response.weather[0].main,
           temp_max: response.main.temp_max,
           temp_min: response.main.temp_min,
-          location: `${response.sys.sunrise}, ${response.sys.sunset}`,
+          loction: `${response.coord.lat}, ${response.coord.lon}`,
         },
       ]);
+
+      setIsLoding(false);
     } catch {
-      setError(true);
+      setHasErr(true);
+      setIsLoding(false);
     }
   };
 
@@ -46,56 +69,30 @@ const WeatherCard = () => {
     setSearch(e.target.value);
   };
 
-  const deleteCity = (id) => {
-    const citiesLeft = val.filter((city) => city.id !== id);
-    setVal(citiesLeft);
+  const deletHandle = (id) => {       
+    const citiesLeft = data.filter((city) => city.id !== id);
+    setData(citiesLeft);
   };
 
   return (
     <div>
-      <div className="form">
-        <h1>Weather</h1>
-        <form>
-          <div className="search">
-            <input
-              type="text"
-              className="input"
-              value={search}
-              placeholder="please enter a city name"
-              name="city"
-              autoComplete="off"
-              onChange={getCityName}
-            />
+      <Form onSubmit={getSearch} onChange={getCityName} value={search} />
+      {isLoding && <p className="loding">Please wait LODING....</p>}
 
-            {search && (
-              <button className="btn" onClick={getSearch}>
-                Get Weather
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
-      {!val && <div>please enter City</div>}
-
-      {[] &&
-        val.map((ele) => (
-          <div className="weCard" key={ele.city} id={ele.id}>
-            <button className="img" onClick={() => deleteCity(ele.id)}>
-              x
-            </button>
-            <h1>{ele.city}</h1>
-            <h2>{ele.main}</h2>
-            <h3>min temp: {ele.temp_min}</h3>
-            <h3>max temp: {ele.temp_max}</h3>
-            <h3>location: {ele.location}</h3>
-          </div>
-        ))}
-
-      {error && (
-        <div className="err" role="alert">
-          Please Enter City ...!
-        </div>
+      {hasErr && (
+        <p className="err" role="alert">
+          Please Enter correct City ...!
+        </p>
       )}
+      {[] &&
+        data.map((item) => (
+          <CityInfo
+            val={item}
+            key={item.city}
+            id={item.id}
+            onClick={()=> deletHandle(item.id)}
+          />
+        ))}
     </div>
   );
 };
