@@ -76,6 +76,7 @@ const WeatherCard = () => {
 
   return (
     <div>
+      <h1>Hack Your Weather III</h1>
       <Form onSubmit={getSearch} onChange={getCityName} value={search} />
       {isLoding && <p className="loding">Please wait LODING....</p>}
 
